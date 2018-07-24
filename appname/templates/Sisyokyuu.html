@@ -1,0 +1,37 @@
+
+<head>
+
+<meta charset="utf">
+<title>地名　初級</title>
+<link rel="stylesheet" href="../static/css/test.css">
+</head>
+<body>
+<header id="sensyu">
+<nav>
+<h1>多摩地域 初級編</h1>
+<h1>{{total}}/30</h1>
+</nav>
+</header>
+<div class="gazou">
+<image src= "../static/image5/{{answer}}.png" class ="image" >
+</div>
+<div id="naiyou">
+<p >{{hint}}</p>
+<form action="" method="post">
+  {% csrf_token %}
+  <table>{{form1.as_table}}
+  <tr><td colspan='2'><input type="submit" value="答える"></td></tr><br>
+  <h1>{{a}}</h1>
+  </table>
+</form>
+<br>
+</div>
+
+<ul class="clear">
+<li><a class="but" href="./">TOP</a></li>
+</ul>
+
+</body>
+<footer>
+</footer>
+</html>

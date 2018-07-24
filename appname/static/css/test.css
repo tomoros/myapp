@@ -1,11 +1,20 @@
 @charset "UTF-8";
+#title{
+	color:white;
+}
+
 body {
 	font-family: "Montserrat",sans-serif;
 	font-size: 16px;
 	line-height: 1.7;
 	margin: 0;
 	padding: 0;
-	background-color: #0099FF;
+
+}
+
+#TOPBODY{
+	background-image: url("../background/201d8936edff627f150b59a51dda9682.png");
+	background-size:cover;
 }
 
 #top{

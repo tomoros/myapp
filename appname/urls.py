@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^tyuukyuu.html$', views.appmain3, name='appmain3'),
     url(r'^zyoukyuu.html$', views.appmain4, name='appmain4'),
     url(r'^tyoukyuu.html$', views.appmain5, name='appmain5'),
+    url(r'^Sisyokyuu.html$', views.appmain6, name='appmain6'),
     url('^$', views.kakikomi, name='kakikomi'),
 ]

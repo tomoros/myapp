@@ -10,12 +10,10 @@ from django.http import HttpResponse
 from appname.forms import KakikomiForm
 import pygame
 from appname.models import Kusyokyuu
+from appname.models import Sisyokyuu
 from django.db.models import Sum
 
 def appmain(request):
-    pygame.mixer.init()
-    pygame.mixer.music.load("appname/music/music.mp3")
-    pygame.mixer.music.play(-1)
     return render(request, 'myapphome.html', {
 
     })
@@ -36,7 +34,7 @@ def appmain2(request):
         while ku.values_list('syutudai',flat=True).get(kuid=rd) ==  1:
             rd = random.randint(1, 23)
         ku.filter(kuid=rd).update(syutudai=1,check=1)
-
+        ku.all().update(total=ku.values_list('total',flat=True).get(kuid=rd)+1)
     else:
         rd=random.randint(1, 23);
         el(ku,rd)
@@ -45,6 +43,7 @@ def appmain2(request):
         'hint'   : ku.values_list('question1',flat=True).get(kuid=rd),
         'form1': KakikomiForm(),
         'a' : b,
+        'total'   : ku.values_list('total',flat=True).get(kuid=rd)
     })
 def appmain3(request):
     pygame.mixer.init()
@@ -63,6 +62,7 @@ def appmain3(request):
         while ku.values_list('syutudai',flat=True).get(kuid=rd) ==  1:
             rd = random.randint(1, 23)
         ku.filter(kuid=rd).update(syutudai=1,check=1)
+        ku.all().update(total=ku.values_list('total',flat=True).get(kuid=rd)+1)
     else:
         rd=random.randint(1, 23);
         el(ku,rd)
@@ -71,6 +71,7 @@ def appmain3(request):
         'hint'   : ku.values_list('question2',flat=True).get(kuid=rd),
         'form1': KakikomiForm(),
         'a' : b,
+        'total'   : ku.values_list('total',flat=True).get(kuid=rd)
     })
 def appmain4(request):
     pygame.mixer.init()
@@ -89,6 +90,7 @@ def appmain4(request):
         while ku.values_list('syutudai',flat=True).get(kuid=rd) ==  1:
             rd = random.randint(1, 23)
         ku.filter(kuid=rd).update(syutudai=1,check=1)
+        ku.all().update(total=ku.values_list('total',flat=True).get(kuid=rd)+1)
     else:
         rd=random.randint(1, 23);
         el(ku,rd)
@@ -98,6 +100,7 @@ def appmain4(request):
         'hint'   : ku.values_list('question3',flat=True).get(kuid=rd),
         'form1': KakikomiForm(),
         'a' : b,
+        'total'   : ku.values_list('total',flat=True).get(kuid=rd)
     })
 def appmain5(request):
     pygame.mixer.init()
@@ -116,6 +119,7 @@ def appmain5(request):
         while ku.values_list('syutudai',flat=True).get(kuid=rd) ==  1:
             rd = random.randint(1, 23)
         ku.filter(kuid=rd).update(syutudai=1,check=1)
+        ku.all().update(total=ku.values_list('total',flat=True).get(kuid=rd)+1)
     else:
         rd=random.randint(1, 23);
         el(ku,rd)
@@ -125,6 +129,36 @@ def appmain5(request):
         'hint'   : ku.values_list('question4',flat=True).get(kuid=rd),
         'form1': KakikomiForm(),
         'a' : b,
+        'total'   : ku.values_list('total',flat=True).get(kuid=rd)
+    })
+def appmain6(request):
+    pygame.mixer.init()
+    ku=Sisyokyuu.objects
+    b=""
+    if request.method == 'POST':
+        answer = ku.values_list('kuname',flat=True).get(check=1)
+        ku.all().update(check=0)
+        b=corre(ku,answer,request.POST)
+        if ku.aggregate(Sum('syutudai'))['syutudai__sum'] == 30:
+            return render(request, 'answer2.html',{
+                'word' : ku.aggregate(Sum('seihu'))['seihu__sum'],
+                'nanido' : "多摩地域 初級"
+            })
+        rd = random.randint(1, 30)
+        while ku.values_list('syutudai',flat=True).get(kuid=rd) ==  1:
+            rd = random.randint(1, 30)
+        ku.filter(kuid=rd).update(syutudai=1,check=1)
+        ku.all().update(total=ku.values_list('total',flat=True).get(kuid=rd)+1)
+    else:
+        rd=random.randint(1, 30);
+        el(ku,rd)
+
+    return render(request, 'Sisyokyuu.html', {
+        'answer' : ku.values_list('kuname',flat=True).get(kuid=rd),
+        'hint'   : ku.values_list('question1',flat=True).get(kuid=rd),
+        'form1': KakikomiForm(),
+        'a' : b,
+        'total'   : ku.values_list('total',flat=True).get(kuid=rd)
     })
 def kakikomi(request):
     f = KakikomiForm()
@@ -142,7 +176,7 @@ def corre(ku,answer,a):
         pygame.mixer.music.play(1)
     return b
 def el(ku,rd):
-    ku.all().update(syutudai=0,seihu=0,check=0)
+    ku.all().update(syutudai=0,seihu=0,check=0,total=1)
     pygame.mixer.music.load("appname/music/question1.mp3")
     pygame.mixer.music.play(1)
     ku.filter(kuid=rd).update(syutudai=1,check=1)

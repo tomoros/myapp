@@ -9,17 +9,17 @@ body {
 	line-height: 1.7;
 	margin: 0;
 	padding: 0;
-
+	background-color: aqua;
 }
 
-#TOPBODY{
-	background-image: url("../background/201d8936edff627f150b59a51dda9682.png");
-	background-size:cover;
+.TOP{
+	background-image: url("../background/tokyo23wards.png");
+	background-size:cover
 }
 
 #top{
 	background-color: green;
-	color: yellow;
+	color: white;
 }
 header {
 	width: 100%;
@@ -29,7 +29,6 @@ header {
 	color: #00C;
 }
 .gazou{
-
 	text-align: center;
 }
 
@@ -70,14 +69,6 @@ li{
 	padding: .6em 2em;
 	position: relative;
 	text-decoration: none;
-
-
-}
-.but:hover{
-		color: lightblue;
-		background-color: red;
-
-}
 	.clear{
 	clear: both;
 }
